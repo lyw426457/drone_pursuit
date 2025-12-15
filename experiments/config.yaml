@@ -1,0 +1,37 @@
+# ================================
+# Global Training Hyperparameters
+# ================================
+learning_rate: 0.0005        # 优化器学习率
+num_episodes: 50000          # 总训练轮数
+batch_size: 256              # 每个梯度更新的 batch 大小
+gamma: 0.95                  # 折扣因子
+tau: 0.01                    # soft update 参数
+
+# Replay Buffer & Training Schedule
+buffer_capacity: 500000      # 经验回放池容量
+warmup_steps: 20000          # 前 2 万步只收集经验，不更新
+update_every: 50             # 每 50 个 env step 做一轮更新
+update_iters: 10             # 每轮更新里做 10 次 train_step
+
+# ================================
+# Environment Parameters
+# ================================
+initial_distance: 250.0      # pursuer 与 evader 初始三维距离（单位：米）
+pos_limit: 300.0             # 环境坐标范围 [-pos_limit, pos_limit]
+
+max_steps: 800               # 每个 episode 最多步数（适配三阶段）
+catch_threshold: 1.0         # 小于该距离判定为抓到
+
+pursuer_max_speed: 6.0       # 追捕者最大线速度（pursuit 阶段）
+evader_max_speed: 2.0        # 逃逸者最大线速度（pursuit 阶段）
+
+detection_radius: 200.0      # 探测 / 接敌半径，用于从 approach 切换到 takeoff
+
+# --- Takeoff 阶段参数 ---
+takeoff_altitude: 30.0       # 起飞目标高度（米）
+takeoff_forward_speed: 4.0   # 起飞阶段沿水平面朝向逃逸者的滑跑速度
+takeoff_climb_rate: 2.0      # 起飞阶段的爬升速度（m/s）
+max_takeoff_steps: 200       # 起飞阶段最多步数，超过则强制进入 pursuit
+
+# --- Approach 阶段参数 ---
+approach_speed_scale: 3.0    # approach 阶段速度倍率，相对 evader_max_speed
